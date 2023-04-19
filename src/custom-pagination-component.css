@@ -1,0 +1,31 @@
+.paginator {
+    display: grid;
+    place-items: center;
+}
+
+.pagination {
+    display: flex;
+    padding-left: 0;
+}
+
+.pagination .page-item {
+    list-style: none;
+}
+
+.pagination .page-item .page-link {
+    display: block;
+    padding: 3px 6px;
+    margin-left: -1px;
+    line-height: 1.25;
+    border: 1px solid #dee2e6;
+    color: #007bff;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.page-item.active 
+.page-link {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}

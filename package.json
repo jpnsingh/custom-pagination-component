@@ -1,0 +1,23 @@
+{
+  "name": "custom-pagination-component",
+  "version": "1.0.0",
+  "description": "Web component to work with pagination for data tables or grids",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpnsingh/custom-pagination-component.git"
+  },
+  "author": "jpnsingh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpnsingh/custom-pagination-component/issues"
+  },
+  "homepage": "https://github.com/jpnsingh/custom-pagination-component#readme",
+  "devDependencies": {
+    "express": "^4.18.2",
+    "http-server": "^14.1.1"
+  }
+}
