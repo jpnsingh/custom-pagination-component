@@ -14,9 +14,17 @@ export class CustomPagiantionComponent extends HTMLElement {
     render(templateHtml) {
         const template = document.createElement('template');
         template.innerHTML = templateHtml;
-        const shadow = this.attachShadow({ mode: "open" });
-        shadow.appendChild(template.content.cloneNode(true));
-        this.bindPaginationEvents(template);
+        const shadowRoot = this.attachShadow({ mode: "open" });
+        // shadowRoot.appendChild(template.content.cloneNode(true));
+        this.shadowRoot.innerHTML = templateHtml;
+
+        document.addEventListener('page-item-click', event => alert(event.detail));
+
+        console.log(this.shadowRoot.querySelector('.pagination'));
+        this.shadowRoot.querySelector('.pagination').onclick = e => alert("Inner target: " + e.target.tagName);
+        document.onclick = e => alert("Outer target: " + e.target.tagName);
+
+        this.bindPaginationEvents(this.shadowRoot.querySelector('.pagination'));
     }
 
     bindPaginationEvents(elem) {
@@ -30,7 +38,12 @@ export class CustomPagiantionComponent extends HTMLElement {
                 }
                 pageItem.classList.add('active');
                 console.log(pageAction);
-                this[pageAction]();
+                elem.dispatchEvent(new CustomEvent('page-item-click', {
+                    bubbles: true,
+                    composed: true,
+                    detail: "composed"
+                }));
+                // this[pageAction]();
             }
         });
     }
