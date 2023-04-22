@@ -18,7 +18,8 @@ export class CustomPagiantionComponent extends HTMLElement {
     }
 
     bindPaginationEvents(paginationElem) {
-        document.addEventListener('page-item-click', event => console.log(event.detail));
+        document.addEventListener('custom-pagingation-click', event => console.log(event.detail));
+
         paginationElem.addEventListener('click', event => {
             const pageAction = event.target.dataset.action;
             if(pageAction) {
@@ -28,11 +29,10 @@ export class CustomPagiantionComponent extends HTMLElement {
                     currentActive.classList.remove('active');
                 }
                 pageItem.classList.add('active');
-                console.log(pageAction);
-                paginationElem.dispatchEvent(new CustomEvent('page-item-click', {
+                paginationElem.dispatchEvent(new CustomEvent('custom-pagingation-click', {
                     bubbles: true,
                     composed: true,
-                    detail: "composed"
+                    detail: {detail: "composed", pageAction, event}
                 }));
             }
         });
