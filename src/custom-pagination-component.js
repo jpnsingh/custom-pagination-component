@@ -24,10 +24,14 @@ export class CustomPagiantionComponent extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (name === 'current-page' && oldValue !== newValue) {
+        if (name === 'current-page') {
             this.updateActivePage(newValue);
-        } else if (oldValue !== null) {
-            this.reRender();
+            return;
+        }
+
+        if (this.shadowRoot) {
+            this.unbindEvents();
+            this.reCreatePages();
         }
     }
 
@@ -42,16 +46,20 @@ export class CustomPagiantionComponent extends HTMLElement {
                 const style = document.createElement('style');
                 style.textContent = template;
                 this.shadowRoot.append(style);
-
-                this.totalCount = +this.getAttribute('total-count');
-                this.pageSize = +this.getAttribute('page-size');
-                this.pages = Math.ceil(this.totalCount / this.pageSize);
-                
-                CustomPagiantionMarkupUtil.createPageItems(this.shadowRoot, this.pages);
-                this.setAttribute('current-page', 1);
-                this.bindEvents();
+                this.reCreatePages();
             })
             .catch((error) => console.log(error));
+    }
+
+    reCreatePages() {
+        this.getPaginationElem()?.remove();
+
+        this.totalCount = +this.getAttribute('total-count');
+        this.pageSize = +this.getAttribute('page-size');
+        this.pages = Math.ceil(this.totalCount / this.pageSize);
+        CustomPagiantionMarkupUtil.createPageItems(this.shadowRoot, this.pages);
+        this.setAttribute('current-page', 1);
+        this.bindEvents();
     }
 
     bindEvents() {
@@ -81,14 +89,8 @@ export class CustomPagiantionComponent extends HTMLElement {
         this.dispatchEvent(new CustomEvent('custom-pagingation-click', {
             bubbles: true,
             composed: true,
-            detail: { detail: "composed", pageAction, pageNum, pageSize: this.pageSize, event }
+            detail: { detail: "composed", pageAction, pageNum: this.currentPage, pageSize: this.pageSize, event }
         }));
-    }
-
-    reRender() {
-        this.unbindEvents();
-        this.shadowRoot.innerHTML = '';
-        this.render();
     }
 
     unbindEvents() {
