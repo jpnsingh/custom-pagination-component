@@ -94,7 +94,7 @@ export class CustomPagiantionComponent extends HTMLElement {
     }
 
     unbindEvents() {
-        this.getPaginationElem().removeEventListener('click', this.handlePageItemClick.bind(this));
+        this.getPaginationElem()?.removeEventListener('click', this.handlePageItemClick.bind(this));
     }
 
     updateActivePage(newValue) {
@@ -102,8 +102,10 @@ export class CustomPagiantionComponent extends HTMLElement {
         if (currentActive) {
             currentActive.classList.remove('active');
         }
-        const newActive = this.getPaginationElem().querySelector(`[data-page-num="${newValue}"]`).closest('li');
-        newActive.classList.add('active');
+        const newActive = this.getPaginationElem().querySelector(`[data-page-num="${newValue}"]`);
+        if(newActive) {
+            newActive.closest('li').classList.add('active');
+        }
 
         const first = this.getPaginationElem().querySelector(`[data-page-num="first"]`).closest('li');
         const prev = this.getPaginationElem().querySelector(`[data-page-num="prev"]`).closest('li');
