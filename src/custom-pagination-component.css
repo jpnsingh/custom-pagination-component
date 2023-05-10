@@ -14,13 +14,23 @@
 
 .pagination .page-item .page-link {
     display: block;
-    padding: 3px 6px;
-    margin-left: -1px;
+    padding: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
     line-height: 1.25;
     border: 1px solid #dee2e6;
+    border-radius: 50%;
+    height: 18px;
+    width: 18px;
+    font-size: 12px;
+    text-align: center;
     color: #007bff;
     background-color: #fff;
     cursor: pointer;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #eee;
 }
 
 .page-item.active 
@@ -28,4 +38,10 @@
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
+}
+
+.page-item.disabled 
+.page-link {
+    pointer-events: none;
+    opacity: 0.4;
 }
