@@ -1,4 +1,4 @@
-.paginator {
+:host([centered]) {
     display: grid;
     place-items: center;
 }
